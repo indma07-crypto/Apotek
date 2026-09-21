@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { cn } from '../../utils/cn.js';
 
 const base =
   'inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition duration-200 ' +
@@ -30,7 +31,9 @@ export default function Button({
   children,
   ...props
 }) {
-  const cls = [base, variants[variant], sizes[size], className].join(' ');
+  // cn() memastikan class di `className` (mis. override warna khusus)
+  // selalu menang atas class bawaan varian, walau kategori class-nya sama.
+  const cls = cn(base, variants[variant], sizes[size], className);
   if (to) return <Link to={to} className={cls} {...props}>{children}</Link>;
   if (href) return <a href={href} className={cls} {...props}>{children}</a>;
   const Tag = as || 'button';
